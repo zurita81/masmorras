@@ -26,12 +26,30 @@ pip install -r requirements.txt
 python src/main.py
 ```
 
+## Controles
+
+| Ação | Teclas |
+|------|--------|
+| Mover | Setas ou A / D |
+| Pular | Espaço, W, Seta para cima ou Z (segure para pular mais alto) |
+| Descer de plataforma fina | Baixo + Pular |
+| Tela cheia | F11 |
+| Sair | Esc |
+
 ## Estrutura
 
 ```
-src/        código do jogo
-assets/     sprites, sons e fases
-tools/      scripts auxiliares (ex.: gerador de sprites)
+src/        código do jogo (main.py é o ponto de entrada)
+assets/     sprites, sons e fases (assets/niveis/*.txt são os mapas em texto)
+tools/      gerador de sprites e testes automáticos da física
+```
+
+Os textos ficam em `src/idiomas.py`; para adicionar um idioma basta copiar o bloco `pt`.
+
+## Testes
+
+```bash
+python tools/teste_fisica.py
 ```
 
 ## Regenerar os sprites
@@ -42,7 +60,7 @@ python tools/gerar_sprites.py
 
 ## Roteiro
 
-1. Base: janela, jogador, plataformas, câmera (PC)
+1. ✅ Base: janela, jogador, plataformas, câmera (PC)
 2. Tiro, inimigos, vidas e pontuação
 3. Sistema de salas e fases 1-1 a 1-3
 4. Chefe da 1-4
