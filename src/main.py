@@ -8,8 +8,8 @@ import sys
 
 import pygame
 
-from config import (ALTURA, ESCALA_JANELA, FPS, LARGURA, TECLAS_BAIXO,
-                    TECLAS_DIREITA, TECLAS_ESQUERDA, TECLAS_PULO)
+from config import (ALTURA, ESCALA_JANELA, FPS, LARGURA, TECLAS_BAIXO, TECLAS_CIMA,
+                    TECLAS_DIREITA, TECLAS_ESQUERDA)
 from idiomas import t
 from jogador import Entrada
 from jogo import Jogo
@@ -38,7 +38,6 @@ async def principal(max_quadros=None):
     quadros = 0
     rodando = True
     while rodando:
-        pulo_apertou = False
         for ev in pygame.event.get():
             if ev.type == pygame.QUIT:
                 rodando = False
@@ -47,16 +46,13 @@ async def principal(max_quadros=None):
                     rodando = False
                 elif ev.key == pygame.K_F11:
                     pygame.display.toggle_fullscreen()
-                elif ev.key in TECLAS_PULO:
-                    pulo_apertou = True
 
         teclas = pygame.key.get_pressed()
         entrada = Entrada(
             esquerda=any(teclas[k] for k in TECLAS_ESQUERDA),
             direita=any(teclas[k] for k in TECLAS_DIREITA),
+            cima=any(teclas[k] for k in TECLAS_CIMA),
             baixo=any(teclas[k] for k in TECLAS_BAIXO),
-            pulo_apertou=pulo_apertou,
-            pulo_segurando=any(teclas[k] for k in TECLAS_PULO),
         )
         jogo.atualizar(entrada)
         jogo.desenhar(tela)

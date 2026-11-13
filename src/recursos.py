@@ -6,16 +6,23 @@ import pygame
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(RAIZ, "assets")
 
+DIRECOES = ("baixo", "cima", "lado")
+
 
 def caminho(*partes):
     return os.path.join(ASSETS, *partes)
 
 
-def carregar_quadros(slug, largura=40):
-    """Lê assets/sprites/<slug>_idle.png e devolve (quadros_direita, quadros_esquerda)."""
-    folha = pygame.image.load(caminho("sprites", f"{slug}_idle.png")).convert_alpha()
-    direita = []
-    for x in range(0, folha.get_width(), largura):
-        direita.append(folha.subsurface((x, 0, largura, folha.get_height())).copy())
-    esquerda = [pygame.transform.flip(q, True, False) for q in direita]
-    return direita, esquerda
+def carregar_topo(slug, tam=32, colunas=6):
+    """Lê assets/sprites/<slug>_topo.png (3 linhas: baixo, cima, lado).
+
+    Devolve {"baixo": [6 quadros], "cima": [...], "lado": [...], "lado_esq": [...]}.
+    Quadros 0-3 = andando, 4-5 = parado.
+    """
+    folha = pygame.image.load(caminho("sprites", f"{slug}_topo.png")).convert_alpha()
+    quadros = {}
+    for linha, nome in enumerate(DIRECOES):
+        quadros[nome] = [folha.subsurface((c * tam, linha * tam, tam, tam)).copy()
+                         for c in range(colunas)]
+    quadros["lado_esq"] = [pygame.transform.flip(q, True, False) for q in quadros["lado"]]
+    return quadros
