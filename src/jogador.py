@@ -45,6 +45,7 @@ class Jogador:
         self.direcao = "baixo"
         self.olhando_direita = True
         self.tempo = 0
+        self.deu_passo = False  # vira True no quadro em que um pé toca o chão (para o som)
         self.quadros = recursos.carregar_topo(personagem)
 
     @property
@@ -79,6 +80,8 @@ class Jogador:
 
         self._mover(nivel, 0)
         self._mover(nivel, 1)
+        # um passo a cada 14 quadros (a cada 2 trocas de quadro da animação)
+        self.deu_passo = self.andando and self.tempo % 14 == 0
 
     def _mover(self, nivel, eixo):
         if eixo == 0:

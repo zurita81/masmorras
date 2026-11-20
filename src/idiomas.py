@@ -9,7 +9,7 @@ TEXTOS = {
     "pt": {
         "titulo": "Masmorra",
         "fase": "Fase {fase}",
-        "ajuda": "Setas ou WASD: mover   F11: tela cheia   Esc: sair",
+        "ajuda": "Setas ou WASD: mover   M: som   F11: tela cheia   Esc: sair",
     },
     # "es": {...},
     # "en": {...},

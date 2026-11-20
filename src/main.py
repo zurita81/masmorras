@@ -46,6 +46,8 @@ async def principal(max_quadros=None):
                     rodando = False
                 elif ev.key == pygame.K_F11:
                     pygame.display.toggle_fullscreen()
+                elif ev.key == pygame.K_m:
+                    jogo.audio.alternar_mudo()
 
         teclas = pygame.key.get_pressed()
         entrada = Entrada(

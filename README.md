@@ -31,6 +31,7 @@ python src/main.py
 | Ação | Teclas |
 |------|--------|
 | Mover (8 direções) | Setas ou W A S D |
+| Ligar/desligar o som | M |
 | Tela cheia | F11 |
 | Sair | Esc |
 
@@ -46,12 +47,16 @@ Os textos ficam em `src/idiomas.py`; para adicionar um idioma basta copiar o blo
 
 Mapas: `#` parede, `.` chão, `P` posição inicial do jogador.
 
-## Sprites e testes
+## Sprites, sons e testes
 
 ```bash
 python tools/gerar_sprites_topo.py   # redesenha os sprites em assets/sprites
+python tools/gerar_sons.py           # recria os efeitos sonoros em assets/sons (precisa de ffmpeg)
 python tools/teste_movimento.py      # testes automáticos do movimento
 ```
+
+Os efeitos sonoros (passo, espada, flecha, magia, uivo, moeda, porta da sala, chefe etc.)
+são sintetizados por código, no estilo retrô de 8 bits, então não têm direitos autorais.
 
 ## Roteiro
 

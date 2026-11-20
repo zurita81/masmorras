@@ -2,6 +2,7 @@
 import pygame
 
 import recursos
+from audio import Audio
 from camera import Camera
 from config import ALTURA, LARGURA
 from idiomas import t
@@ -18,9 +19,12 @@ class Jogo:
         self.camera = Camera(self.nivel.largura_px, self.nivel.altura_px)
         self.camera.centralizar(self.jogador.rect)
         self.fonte = pygame.font.Font(None, 18)
+        self.audio = Audio()
 
     def atualizar(self, entrada):
         self.jogador.atualizar(entrada, self.nivel)
+        if self.jogador.deu_passo:
+            self.audio.tocar("passo")
         self.camera.seguir(self.jogador.rect)
 
     def desenhar(self, tela):
