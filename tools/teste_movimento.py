@@ -111,6 +111,55 @@ confere("baixo -> frente", jog.direcao == "baixo")
 rodar(jogo, 3, cima=True)
 confere("cima -> costas", jog.direcao == "cima")
 
+print("Personagens")
+from jogo import PERSONAGENS_JOGAVEIS  # noqa: E402
+import recursos  # noqa: E402
+
+for slug in PERSONAGENS_JOGAVEIS + ("lobo",):
+    folha = recursos.carregar_topo(slug)
+    ok = all(len(folha[d]) == 6 and folha[d][0].get_size() == (32, 32) for d in ("baixo", "cima", "lado", "lado_esq"))
+    confere(f"sprites de {slug} carregam (3 direções x 6 quadros)", ok)
+
+jogo, jog, niv = novo()
+desenhou = True
+tela_teste = pygame.Surface((LARGURA, ALTURA))
+for slug in PERSONAGENS_JOGAVEIS:
+    jogo.trocar_personagem(slug)
+    for kw in ({"direita": True}, {"esquerda": True}, {"baixo": True}, {"cima": True}, {}):
+        pos_pes(jog, 20, 12)
+        try:
+            rodar(jogo, 12, **kw)
+            jogo.desenhar(tela_teste)
+        except Exception as e:  # noqa: BLE001
+            desenhou = False
+            print("   erro:", slug, kw, e)
+confere("todos os 5 personagens andam e são desenhados em todas as direções", desenhou)
+
+
+def distancia_em_40(slug):
+    j, jg, _ = novo()
+    jg.definir_personagem(slug)
+    pos_pes(jg, 8, 12)
+    x0 = jg.x
+    rodar(j, 40, direita=True)
+    return jg.x - x0
+
+
+confere("lobo corre mais que o cavaleiro", distancia_em_40("lobo") > distancia_em_40("cavaleiro") * 1.2,
+        f"lobo={distancia_em_40('lobo')}px cavaleiro={distancia_em_40('cavaleiro')}px")
+
+jogo, jog, niv = novo()
+jogo.trocar_personagem("mago")
+jogo.transformar()
+confere("T não transforma o mago", jog.personagem == "mago")
+jogo.trocar_personagem("metamorfo")
+jogo.transformar()
+confere("T transforma o metamorfo em lobo", jog.personagem == "lobo")
+jogo.transformar()
+confere("T de novo volta a metamorfo", jog.personagem == "metamorfo")
+jogo.trocar_personagem("lobo")
+confere("o lobo não é escolhido direto pelas teclas", jog.personagem == "metamorfo")
+
 print("Câmera")
 jogo, jog, niv = novo()
 rodar(jogo, 300, direita=True, baixo=True)

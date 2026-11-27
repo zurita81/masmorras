@@ -17,14 +17,29 @@ visual gótico e sombrio (estilo Blasphemous) e um chefe no fim do mundo.
 
 ## Personagens
 
-Cavaleiro (pronto), Mago, Druida, Arqueiro e Metamorfo (que se transforma em lobo).
+Todos já desenhados em pixel art (de frente, de costas e de lado, com animação de andar):
+
+| Tecla | Personagem |
+|-------|------------|
+| 1 | Cavaleiro |
+| 2 | Mago |
+| 3 | Druida |
+| 4 | Arqueiro |
+| 5 | Metamorfo (aperte **T** para virar Lobo, mais rápido) |
 
 ## Como rodar
 
 ```bash
 pip install -r requirements.txt
-python src/main.py
+python main.py
 ```
+
+### Jogar no navegador (sem instalar nada)
+
+A cada atualização na branch `main`, o GitHub compila o jogo para web e publica em
+**https://zurita81.github.io/masmorras/** (precisa ativar o Pages uma vez: em
+*Settings > Pages > Source* escolher **GitHub Actions**). O mesmo link abre no celular,
+mas os controles de toque ainda não existem (vêm numa etapa futura).
 
 ## Controles
 
@@ -32,13 +47,17 @@ python src/main.py
 |------|--------|
 | Mover (8 direções) | Setas ou W A S D |
 | Ligar/desligar o som | M |
+| Trocar de personagem | 1 a 5 |
+| Virar lobo (só o Metamorfo) | T |
 | Tela cheia | F11 |
 | Sair | Esc |
 
 ## Estrutura
 
 ```
-src/        código do jogo (main.py é o ponto de entrada)
+main.py     ponto de entrada do jogo
+src/        código do jogo
+.github/    publicação automática da versão web
 assets/     sprites, sons e fases (assets/niveis/*.txt são os mapas em texto)
 tools/      gerador de sprites e testes automáticos
 ```
@@ -50,7 +69,7 @@ Mapas: `#` parede, `.` chão, `P` posição inicial do jogador.
 ## Sprites, sons e testes
 
 ```bash
-python tools/gerar_sprites_topo.py   # redesenha os sprites em assets/sprites
+python tools/gerar_sprites_topo.py   # redesenha os 6 personagens em assets/sprites
 python tools/gerar_sons.py           # recria os efeitos sonoros em assets/sons (precisa de ffmpeg)
 python tools/teste_movimento.py      # testes automáticos do movimento
 ```
@@ -60,12 +79,13 @@ são sintetizados por código, no estilo retrô de 8 bits, então não têm dire
 
 ## Roteiro
 
-1. ✅ Base: janela, jogador, câmera (PC) — agora em vista de cima
-2. Sprites de todos os personagens, ataque, inimigos, vidas e pontuação
-3. Sistema de salas que trancam e fases 1-1 a 1-3
-4. Chefe da 1-4
-5. Sons, menu e tela de game over
-6. Controles de toque e versão web/celular (pygbag)
+1. ✅ Base: janela, jogador, câmera (PC), em vista de cima
+2. ✅ Sprites dos 5 personagens + lobo, efeitos sonoros e seleção de personagem
+3. Ataque de cada personagem, inimigos, vidas e pontuação
+4. Sistema de salas que trancam e fases 1-1 a 1-3
+5. Chefe da 1-4
+6. Menu, tela de game over e mais sons
+7. Controles de toque para celular (a versão web já é publicada automaticamente)
 
 A primeira versão, de plataforma (vista lateral), ficou guardada no histórico do git
 (commit "Etapa 1").

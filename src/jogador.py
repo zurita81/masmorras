@@ -46,7 +46,15 @@ class Jogador:
         self.olhando_direita = True
         self.tempo = 0
         self.deu_passo = False  # vira True no quadro em que um pé toca o chão (para o som)
-        self.quadros = recursos.carregar_topo(personagem)
+        self.personagem = None
+        self.vel = VEL
+        self.definir_personagem(personagem)
+
+    def definir_personagem(self, slug):
+        """Troca os desenhos (e a velocidade) do personagem. O lobo corre mais que os humanos."""
+        self.personagem = slug
+        self.quadros = recursos.carregar_topo(slug)
+        self.vel = VEL * (1.35 if slug == "lobo" else 1.0)
 
     @property
     def rect(self):
@@ -63,7 +71,7 @@ class Jogador:
         dy = int(entrada.baixo) - int(entrada.cima)
         if dx or dy:
             n = math.hypot(dx, dy)  # na diagonal não anda mais rápido
-            alvo_x, alvo_y, passo = dx / n * VEL, dy / n * VEL, ACEL
+            alvo_x, alvo_y, passo = dx / n * self.vel, dy / n * self.vel, ACEL
         else:
             alvo_x = alvo_y = 0.0
             passo = ATRITO

@@ -1,15 +1,14 @@
-"""Ponto de entrada.  Rodar:  python src/main.py
+"""Laço principal do jogo (quem inicia é o main.py da raiz do projeto).
 
-O laço principal é "async" de propósito: é o que a ferramenta pygbag exige
-para publicar o jogo no navegador (PC e celular) mais tarde.
+O laço é "async" de propósito: é o que a ferramenta pygbag exige
+para publicar o jogo no navegador (PC e celular).
 """
 import asyncio
-import sys
 
 import pygame
 
 from config import (ALTURA, ESCALA_JANELA, FPS, LARGURA, TECLAS_BAIXO, TECLAS_CIMA,
-                    TECLAS_DIREITA, TECLAS_ESQUERDA)
+                    TECLAS_DIREITA, TECLAS_ESQUERDA, TECLAS_PERSONAGEM)
 from idiomas import t
 from jogador import Entrada
 from jogo import Jogo
@@ -48,6 +47,10 @@ async def principal(max_quadros=None):
                     pygame.display.toggle_fullscreen()
                 elif ev.key == pygame.K_m:
                     jogo.audio.alternar_mudo()
+                elif ev.key == pygame.K_t:
+                    jogo.transformar()
+                elif ev.key in TECLAS_PERSONAGEM:
+                    jogo.trocar_personagem(TECLAS_PERSONAGEM[ev.key])
 
         teclas = pygame.key.get_pressed()
         entrada = Entrada(
@@ -67,9 +70,3 @@ async def principal(max_quadros=None):
         if max_quadros and quadros >= max_quadros:
             break
     pygame.quit()
-
-
-if __name__ == "__main__":
-    # "python src/main.py --quadros 120" roda 120 quadros e fecha (usado nos testes)
-    limite = int(sys.argv[sys.argv.index("--quadros") + 1]) if "--quadros" in sys.argv else None
-    asyncio.run(principal(limite))
